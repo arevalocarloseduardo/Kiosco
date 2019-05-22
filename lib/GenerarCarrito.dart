@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contabilidad/AgregarProductos.dart';
 import 'package:contabilidad/Crud.dart';
-import 'package:contabilidad/Productos.dart';
+import 'package:contabilidad/Models/Productos.dart';
 import 'package:contabilidad/Tarjeta.dart';
 import 'package:flutter/material.dart';
 

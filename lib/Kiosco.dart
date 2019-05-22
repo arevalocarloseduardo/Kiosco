@@ -6,12 +6,11 @@ import 'package:contabilidad/VerProductos.dart';
 import 'package:flutter/material.dart';
 
 class Kiosco extends StatefulWidget {
-  Kiosco(Carrito carrito, int tabIndex);
-  Carrito carrito;
-  int tabIndex;
+  const Kiosco({Key key, this.tabIndex}) : super(key: key);
 
   @override
   _KioscoState createState() => _KioscoState();
+  final int tabIndex;
 }
 
 class _KioscoState extends State<Kiosco> {
@@ -19,7 +18,6 @@ class _KioscoState extends State<Kiosco> {
   int paginaInicial = 0;
   //declaro los page
   SistemaCrud sistemaCrud;
-  
   VerProducto verProducto;
   CarritoPage carritoPage;
   List<Widget> paginas;
@@ -30,7 +28,7 @@ class _KioscoState extends State<Kiosco> {
   @override
   void initState() {
     sistemaCrud = SistemaCrud();
-    verProducto = VerProducto(carrito);
+    //verProducto = VerProducto();
     carritoPage = CarritoPage(carrito);
     //almaceno las paginas
     paginas = [sistemaCrud, verProducto, carritoPage];

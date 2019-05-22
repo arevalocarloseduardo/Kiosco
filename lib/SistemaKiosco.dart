@@ -2,23 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contabilidad/Carrito.dart';
 import 'package:contabilidad/Historial.dart';
 import 'package:contabilidad/Kiosco.dart';
-import 'package:contabilidad/Productos.dart';
 import 'package:flutter/material.dart';
 
-class SistemaKiosco{
-  Carrito carrito=new Carrito();
+class SistemaKiosco {
   final referenciaDeProductos = Firestore.instance;
-  Historial historial; 
-  Kiosco widgetKiosco;
-
-  Carrito getCarrito(){
-
+  Carrito carrito = Carrito();
+  Historial historial;
+  Kiosco widgetKiosco = Kiosco();
+  Carrito getCarrito() {
     return carrito;
   }
 
-  Kiosco getWidgetKiosco(){
+  Kiosco getWidgetKiosco() {
     return widgetKiosco;
   }
- 
-
 }

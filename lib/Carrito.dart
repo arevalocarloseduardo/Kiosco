@@ -1,5 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contabilidad/Productos.dart';
+import 'package:contabilidad/Models/Productos.dart';
 
 class Carrito {
   List<Productos> _listaProductos = new List<Productos>();
@@ -15,5 +14,4 @@ class Carrito {
   List<Productos> getListaProducto() {
     return _listaProductos;
   }
-
 }

@@ -1,5 +1,5 @@
 import 'package:contabilidad/Carrito.dart';
-import 'package:contabilidad/Productos.dart';
+import 'package:contabilidad/Models/Productos.dart';
 import 'package:contabilidad/SistemaKiosco.dart';
 import 'package:flutter/material.dart';
 
