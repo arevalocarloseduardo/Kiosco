@@ -28,7 +28,8 @@ class _VerProductoState extends State<VerProducto> {
         title: Text('Kiosko'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {irAAgregarProducto();
+        onPressed: () {
+          irAAgregarProducto();
                   },
                   child: Icon(Icons.add),
                 ),

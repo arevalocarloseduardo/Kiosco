@@ -1,5 +1,6 @@
 import 'package:contabilidad/modelos/ventas_modelo.dart';
 import 'package:contabilidad/src/blocs/ventas_bloc.dart';
+import 'package:contabilidad/src/screens/ventas/agregar_venta.dart';
 import 'package:contabilidad/src/screens/ventas/card_ventas.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,12 @@ class VentasScreen extends StatelessWidget {
             Icons.add_shopping_cart,
             color: Colors.blueAccent,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AgregarVenta()),
+            );
+          },
         ),
         body: listaVentas());
   }
