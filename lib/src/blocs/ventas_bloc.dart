@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contabilidad/modelos/ventas_modelo.dart';
+import 'package:contabilidad/src/modelos/ventas_modelo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class VentasBloc{

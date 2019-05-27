@@ -1,8 +1,11 @@
-import 'package:contabilidad/src/screens/carrito/carrito_screen.dart';
+
 import 'package:contabilidad/src/screens/configuracion/configuracion_screen.dart';
 import 'package:contabilidad/src/screens/ventas/ventas_kiosco_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
+import 'productos/carrito_screen.dart';
+
 
 class KioscoScreen extends StatefulWidget {
   @override
@@ -13,7 +16,7 @@ class _KioscoScreenState extends State<KioscoScreen> {
   int _screenIndice = 0;
   //Crear Screens
   final VentasScreen _ventasScreen = VentasScreen();
-  final CarritoScreen _carritoScreen = CarritoScreen();
+  final ProductosScreen _carritoScreen = ProductosScreen();
   final ConfinguracionScreen _configuracionScreen = ConfinguracionScreen();
   Widget _mostrarScreen = VentasScreen();
 

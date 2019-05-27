@@ -1,7 +1,9 @@
-import 'package:contabilidad/Crud.dart';
-import 'package:contabilidad/Tarjeta.dart';
+
+import 'package:contabilidad/old/Tarjeta.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'Crud.dart';
 
 class SistemaCrud extends StatefulWidget {
   @override

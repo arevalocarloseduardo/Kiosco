@@ -1,5 +1,5 @@
-import 'package:contabilidad/modelos/ventas_modelo.dart';
 import 'package:contabilidad/src/blocs/ventas_bloc.dart';
+import 'package:contabilidad/src/modelos/ventas_modelo.dart';
 import 'package:contabilidad/src/screens/ventas/agregar_venta.dart';
 import 'package:contabilidad/src/screens/ventas/card_ventas.dart';
 import 'package:flutter/material.dart';
@@ -14,21 +14,26 @@ class VentasScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text("Mis Ventas"),
           centerTitle: true,
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.white,
-          child: Icon(
-            Icons.add_shopping_cart,
-            color: Colors.blueAccent,
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AgregarVenta()),
-            );
-          },
+          actions: <Widget>[
+             Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                child: Icon(Icons.add, size: 30),
+                onTap: () {
+                  irAgregarVentas(context);
+                },
+              ),
+            )
+          ],
         ),
         body: listaVentas());
+  }
+
+  irAgregarVentas(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AgregarVenta()),
+    );
   }
 
   Widget listaVentas() {

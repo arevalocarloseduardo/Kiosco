@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contabilidad/Models/Productos.dart';
+import 'package:contabilidad/old/Models/Productos.dart';
 
 class DB{
   final db = Firestore.instance;

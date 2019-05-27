@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contabilidad/src/blocs/proveedor_bloc.dart';
-import 'package:contabilidad/src/repositorio/base_de_datos.dart';
+import 'package:contabilidad/old/proveedor_bloc.dart';
+import 'package:contabilidad/old/repositorio/base_de_datos.dart';
 
 class EjemploBloc implements BlocBase{
   EjemploBloc(){

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contabilidad/src/blocs/proveedor_bloc.dart';
 
 class Productos {
   String keyProducto;
@@ -59,7 +58,8 @@ class Productos {
       'precioDeVenta': precioDeVenta,
       'imgUrl': imgUrl,
       'tipo': tipo,
-      'unidad': unidad,
+      'unidad': unidad,      
+      'ke': unidad,
     };
   }
 }

@@ -1,64 +1,30 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contabilidad/Models/Productos.dart';
+import 'dart:async';
+import 'package:barcode_scan/barcode_scan.dart';
+import 'package:contabilidad/src/modelos/productos_modelo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class AgregarCarrito extends StatefulWidget {
-  
-
+class LectorCodigo extends StatefulWidget {
   @override
-  _AgregarCarritoState createState() => _AgregarCarritoState();
+  _LectorCodigoState createState() => _LectorCodigoState();
 }
 
-class _AgregarCarritoState extends State<AgregarCarrito> {
+class _LectorCodigoState extends State<LectorCodigo> 
+{
+  String codigoDeBarra = "";
 
-  
-  final referenciaBaseDatos = Firestore.instance;
-  final _formulario = GlobalKey<FormState>();
-  String nombre;
-  double precio;
-  
-  double contador = 1;
+  var contador;
 
-  String _title;
-
-  double _precio;
-
-  String _imagenUrl;
-
-  _saveTodo() {
-    final formsState = _formulario.currentState;
-    if (!formsState.validate()) return;
-    formsState.save();
-    print("hola");
-    Navigator.of(context).pop(Productos(
-        tipo: "n",
-        precio: 2.22,
-        nombre: "",
-        imgUrl: "",
-        keyProducto: "",
-        cantidad: contador,
-        precioDeVenta: 8.5,
-        unidad: "",
-        peso: 8.5));
+  var _formulario;
+ @override
+  initState() {
+    super.initState();
+    scan();
   }
-  
-  void agregarValor() {
-    setState(() {
-      contador = contador + 1;
-    });
-  }
-   void quitarValor() {
-    setState(() {
-      if(contador>1){
-      contador = contador - 1;}
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    
-    return AlertDialog(
-      title: Text("Agregar Carrito"),
+    return  AlertDialog(
+      title: Text("Agregar al Carrito",textAlign: TextAlign.center,style: TextStyle(color: Colors.blueAccent),),
       contentPadding: EdgeInsets.all(20.0),
       content: SingleChildScrollView(
         child: Form(
@@ -69,8 +35,8 @@ class _AgregarCarritoState extends State<AgregarCarrito> {
               children: <Widget>[
                 Image.network(
                   "http://www.golosinaspormayor.com/ventaonline/wp-content/uploads/galletitas-pepitos.jpg",
-                  height: 250,
-                  width: 250,
+                  height: 150,
+                  width: 150,
                 ),
                 Row(
                   children: <Widget>[
@@ -128,6 +94,53 @@ class _AgregarCarritoState extends State<AgregarCarrito> {
         ),
       ],
     );
-  }
+}
 
+  _saveTodo() {
+    final formsState = _formulario.currentState;
+    if (!formsState.validate()) return;
+    formsState.save();
+    Navigator.of(context).pop(Productos(
+        codBarra: 93,
+        tipo: "n",
+        precio: 2.22,
+        nombre: "",
+        imgUrl: "",
+        keyProducto: "",
+        cantidad: contador,
+        precioDeVenta: 8.5,
+        unidad: "",
+        peso: 8.5));
+  }
+  
+  void agregarValor() {
+    setState(() {
+      contador = contador + 1;
+    });
+  }
+   void quitarValor() {
+    setState(() {
+      if(contador>1){
+      contador = contador - 1;}
+    });
+  }
+  Future scan() async {
+    try {
+      String barcode = await BarcodeScanner.scan();
+      setState(() => this.codigoDeBarra = barcode);
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        setState(() {
+          this.codigoDeBarra = 'No tiene Permisos';
+        });
+      } else {
+        setState(() => this.codigoDeBarra = 'Error desconocido: $e');
+      }
+    } on FormatException {
+      setState(() =>
+          this.codigoDeBarra = 'no escaneo nada, posiblemente retrocedio');
+    } catch (e) {
+      setState(() => this.codigoDeBarra = 'Error desconocido: $e');
+    }
+  }
 }

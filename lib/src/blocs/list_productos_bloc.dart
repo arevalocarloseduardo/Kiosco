@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contabilidad/modelos/productos_modelo.dart';
+import 'package:contabilidad/src/modelos/productos_modelo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProductosBloc{
@@ -7,10 +7,12 @@ class ProductosBloc{
   //recuperar datos
   
   BehaviorSubject <List<Productos>> get productosList=>_productosCollection;
+  
+  BehaviorSubject <List<Productos>> get productosListId=>_productosCollection;
+  String id="35as";
 
    void iniciarDatos()async{
      var q = await Firestore.instance.collection('Productos');
-
     q.snapshots().listen((querySnapshot) {
       if (querySnapshot.documentChanges.length == 0) {
         productosList.sink.add(new List());
@@ -26,6 +28,19 @@ class ProductosBloc{
         } else if (val.type == DocumentChangeType.removed) {
           _doRemove(place);
         }
+      });
+    });
+     var listaSegunId = await Firestore.instance.collection('productosVendidos');
+    listaSegunId.where("id",isEqualTo: id).snapshots().listen((querySnapshot) {
+      if (querySnapshot.documentChanges.length == 0) {
+        productosList.sink.add(new List());
+      }
+      querySnapshot.documentChanges.forEach((val) {
+        Productos place =
+            new Productos.fromSnapshot(val.document);
+        if (val.type == DocumentChangeType.added) {
+          _doAddNew(place);
+        } 
       });
     });
   }

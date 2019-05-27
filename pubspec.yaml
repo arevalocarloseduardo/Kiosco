@@ -30,6 +30,8 @@ dependencies:
   barcode_scan: ^1.0.0
   curved_navigation_bar: ^0.2.11
   carousel_pro: ^0.0.13
+  firebase_storage: ^3.0.0
+  path: ^1.6.2
 
 
 dev_dependencies:

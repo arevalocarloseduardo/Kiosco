@@ -1,23 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contabilidad/AgregarCarrito.dart';
-import 'package:contabilidad/Carrito.dart';
-import 'package:contabilidad/CarritoPage.dart';
-import 'package:contabilidad/Crud.dart';
-import 'package:contabilidad/Models/Productos.dart';
-import 'package:contabilidad/SistemaKiosco.dart';
+import 'Crud.dart';
+import 'package:contabilidad/old/Models/Productos.dart';
 import 'package:flutter/material.dart';
-
 class Tarjetas {
   //utilizo el Crud
   Crud _crudObj = Crud();
-  SistemaKiosco sistemaKiosco=SistemaKiosco();
- 
   //tarjetas que recibe parametros para construir
   Card construirItem(DocumentSnapshot doc) {
     //tiene que estar tal cual en la base de datos doc.data['nombre']
     var nombre = doc.data['nombre'];
     var casos = doc.data['funcion'];
-
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -55,29 +47,21 @@ class Tarjetas {
     );
   }
 
-  Card construirProductos(DocumentSnapshot doc,context) {
+  Card construirProductos(DocumentSnapshot doc) {
 
     Productos productos = Productos.from(doc);
-    
+
     return Card(
       child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ListTile(onTap: (){
-            agregarCarrito(context);
-                      },
-                        leading: Image.network("${productos.imgUrl}",filterQuality: FilterQuality.none,),
-                        title: Text(productos.nombre),
-                        subtitle: Text("Precio:${productos.precio}"),
-                      )),
-                      
-                );
-              }
-            
+          child: ListTile(
+            leading: Image.network("${productos.imgUrl}",filterQuality: FilterQuality.none,),
+            title: Text(productos.nombre),
+            subtitle: Text("Precios:${productos.precio}"),
+            onTap: (){
               
-            void agregarCarrito(context) async{
-             Productos productoCarrito=await  showDialog(context: context,builder: (_)=>AgregarCarrito());
-                  if(productoCarrito!=null){
-                await SistemaKiosco().getCarrito().agregarProducto(productoCarrito); 
-              }  
-            }
+            },            
+          )),
+    );
+  }
 }

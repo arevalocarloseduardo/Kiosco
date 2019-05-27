@@ -1,6 +1,7 @@
-import 'package:contabilidad/Carrito.dart';
-import 'package:contabilidad/Models/Productos.dart';
-import 'package:contabilidad/SistemaKiosco.dart';
+
+import 'package:contabilidad/old/Models/Productos.dart';
+import 'package:contabilidad/old/Carrito.dart';
+import 'package:contabilidad/old/SistemaKiosco.dart';
 import 'package:flutter/material.dart';
 
 class CarritoPage extends StatefulWidget {

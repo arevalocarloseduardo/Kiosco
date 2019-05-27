@@ -1,4 +1,5 @@
-import 'package:contabilidad/modelos/productos_modelo.dart';
+
+import 'package:contabilidad/src/modelos/productos_modelo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CarritoBloc{

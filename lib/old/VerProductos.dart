@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contabilidad/AgregarCarrito.dart';
-import 'package:contabilidad/AgregarProductos.dart';
-import 'package:contabilidad/Carrito.dart';
-import 'package:contabilidad/Crud.dart';
-import 'package:contabilidad/Models/Productos.dart';
-import 'package:contabilidad/Tarjeta.dart';
+import 'Crud.dart';
+import 'package:contabilidad/old/Models/Productos.dart';
+import 'package:contabilidad/old/Tarjeta.dart';
 import 'package:flutter/material.dart';
+
+import 'AgregarProductos.dart';
+import 'Carrito.dart';
 
 class VerProducto extends StatefulWidget {
   VerProducto(Carrito carrito);

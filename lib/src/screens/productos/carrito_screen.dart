@@ -1,33 +1,43 @@
-//Se mostrara una listas de ventas
-//tendrá tabs para ver ventas del dia
-import 'package:contabilidad/modelos/productos_modelo.dart';
+import 'package:contabilidad/src/modelos/productos_modelo.dart';
 import 'package:contabilidad/src/blocs/list_productos_bloc.dart';
-import 'package:contabilidad/src/screens/carrito/card_producto.dart';
-import 'package:contabilidad/src/screens/carrito/horizontal_list.dart';
+import 'package:contabilidad/src/screens/productos/agregar_producto.dart';
 import 'package:flutter/material.dart';
 
-class CarritoScreen extends StatelessWidget {
+import 'card_producto.dart';
+import 'horizontal_list.dart';
+
+class ProductosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.blueAccent,
         appBar: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(onTap: () {}, child: Icon(Icons.search)),
+          ),
           title: Text("Mis Productos"),
           centerTitle: true,
-          actions: <Widget>[Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InkWell(onTap: (){},child: Icon(Icons.search)),
-          )],
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.white,
-          child: Icon(
-            Icons.add_shopping_cart,
-            color: Colors.blueAccent,
-          ),
-          onPressed: () {},
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                child: Icon(Icons.add, size: 30),
+                onTap: () {
+                  irAgregarProducto(context);
+                },
+              ),
+            )
+          ],
         ),
         body: listaVentas());
+  }
+
+  irAgregarProducto(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AgregarProducto()),
+    );
   }
 
   Widget listaVentas() {
@@ -45,7 +55,7 @@ class CarritoScreen extends StatelessWidget {
           child: HorizontalList(),
         ),
         Container(
-          padding: EdgeInsets.only(top: 130,bottom: 15),
+          padding: EdgeInsets.only(top: 130, bottom: 15),
           child: StreamBuilder<List<Productos>>(
             stream: productosBloc.productosList,
             builder: (context, snapshot) {

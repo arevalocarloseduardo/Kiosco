@@ -1,4 +1,5 @@
-import 'package:contabilidad/Models/Productos.dart';
+
+import 'package:contabilidad/old/Models/Productos.dart';
 
 class Carrito {
   List<Productos> _listaProductos = new List<Productos>();

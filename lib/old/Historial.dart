@@ -1,4 +1,4 @@
-import 'package:contabilidad/Venta.dart';
+import 'package:contabilidad/src/modelos/ventas_modelo.dart';
 import 'package:flutter/material.dart';
 
 class Historial {

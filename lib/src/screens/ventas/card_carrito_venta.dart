@@ -1,4 +1,4 @@
-import 'package:contabilidad/modelos/productos_modelo.dart';
+import 'package:contabilidad/src/modelos/productos_modelo.dart';
 import 'package:flutter/material.dart';
 
 class CardCarritoVenta extends StatelessWidget {

@@ -1,8 +1,8 @@
-import 'package:contabilidad/Carrito.dart';
-import 'package:contabilidad/CarritoPage.dart';
-import 'package:contabilidad/SistemaCrud.dart';
-import 'package:contabilidad/SistemaKiosco.dart';
-import 'package:contabilidad/VerProductos.dart';
+
+import 'package:contabilidad/old/Carrito.dart';
+import 'package:contabilidad/old/CarritoPage.dart';
+import 'package:contabilidad/old/SistemaCrud.dart';
+import 'package:contabilidad/old/VerProductos.dart';
 import 'package:flutter/material.dart';
 
 class Kiosco extends StatefulWidget {

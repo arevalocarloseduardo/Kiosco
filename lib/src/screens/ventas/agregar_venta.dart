@@ -1,9 +1,9 @@
-import 'package:contabilidad/modelos/productos_modelo.dart';
+import 'package:contabilidad/src/modelos/productos_modelo.dart';
 import 'package:contabilidad/src/blocs/carrito_bloc.dart';
-import 'package:contabilidad/src/blocs/list_productos_bloc.dart';
-import 'package:contabilidad/src/screens/LectorCodigo.dart';
 import 'package:contabilidad/src/screens/ventas/card_carrito_venta.dart';
 import 'package:flutter/material.dart';
+
+import 'LectorCodigo.dart';
 
 class AgregarVenta extends StatelessWidget {
   var prod = Productos(
