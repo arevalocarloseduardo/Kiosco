@@ -13,17 +13,24 @@ class AgregarProductosBloc{
   }
   void agregraP(Productos p)async {   
    agregarProducto.sink.add(p);
- await Firestore.instance
-        .collection('Productos')
-        .add(p.toJson());
-   
+
+   var s= Firestore.instance.collection('Productos').document();
+        p.keyProducto=s.documentID;
+      await s.setData(p.toJson());
+        
   }
   void actualizaP(Productos p)async {   
     //falta poner por si recive un null
    agregarProducto.sink.add(p);
  await Firestore.instance
-        .collection('Productos').document("${p.keyProducto}")
-        .updateData(p.toJson());
+        .collection('Productos').document(p.keyProducto).setData(p.toJson());
+   
+  }
+  
+  void borrarP(Productos p)async {   
+   agregarProducto.sink.add(p);
+ await Firestore.instance
+        .collection('Productos').document(p.keyProducto).delete();
    
   }
   AgregarProductosBloc(){

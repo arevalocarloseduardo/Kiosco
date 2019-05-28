@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:contabilidad/src/blocs/agregar_producto_bloc.dart';
 import 'package:contabilidad/src/modelos/productos_modelo.dart';
-import 'package:contabilidad/src/screens/productos/agregar_producto.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +9,9 @@ import 'package:path/path.dart';
 import 'agregar_codBarra.dart';
 
 class ActualizarProductoDialog extends StatefulWidget {
+  final Productos modelo;
+  ActualizarProductoDialog({this.modelo});
+
   @override
   _ActualizarProductoDialogState createState() =>
       _ActualizarProductoDialogState();
@@ -18,31 +19,37 @@ class ActualizarProductoDialog extends StatefulWidget {
 
 class _ActualizarProductoDialogState extends State<ActualizarProductoDialog> {
   final formKey = GlobalKey<FormState>();
-  final textCodBarraControl = TextEditingController();  
-  final textNombreControl = TextEditingController();    
+  final textCodBarraControl = TextEditingController();
+  final textNombreControl = TextEditingController();
   final textPrecio = TextEditingController();
-  Productos productoActualizados;  
+  Productos productoActualizados;
   File _image;
   String filename;
   bool datos = false;
   String _nombre;
   int _codBarra;
   double _precioVenta;
-
-  var _imgUrl;
+  String _imgUrl;
   @override
   void initState() {
     super.initState();
-    textCodBarraControl.text="js";
-    textNombreControl.text="lk";
-    textPrecio.text="lkl";
-    }
+    textCodBarraControl.text = widget.modelo.codBarra.toString();
+    textNombreControl.text = widget.modelo.nombre;
+    textPrecio.text = "${widget.modelo.precioDeVenta}";
+    _imgUrl = widget.modelo.imgUrl;
+  }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Actualizar Datos",style: TextStyle(color: Colors.blueAccent),),
-      content: dialogActualizar(context),
+      title: Text(
+        "Actualizar Datos",
+        style: TextStyle(color: Colors.blueAccent),
+      ),
+      content: Center(
+          child: datos == true
+              ? CircularProgressIndicator()
+              : dialogActualizar(context)),
       actions: <Widget>[
         FlatButton(
           onPressed: () {
@@ -52,13 +59,20 @@ class _ActualizarProductoDialogState extends State<ActualizarProductoDialog> {
           child: Text("Cancelar"),
         ),
         FlatButton(
-          onPressed: (){
-            Navigator.of(context).pop(productoActualizados);},
+          onPressed: () {
+            borrar(context);
+          },
+          textColor: Colors.orangeAccent,
+          child: Text("Borrar"),
+        ),
+        FlatButton(
+          onPressed: () {
+            _image == null ? agregaDatosSinImg(context) : agregarDatos(context);
+          },
           textColor: Colors.blue,
           child: Text("Agregar"),
         ),
       ],
-      
     );
   }
 
@@ -77,16 +91,22 @@ class _ActualizarProductoDialogState extends State<ActualizarProductoDialog> {
                     top: 0.1,
                     right: 0.1,
                     bottom: 0.1,
-                    child: _image == null
+                    child: _imgUrl == null
                         ? Text(
                             'No hay imagen',
                             style: TextStyle(color: Colors.white),
                           )
-                        : Image.file(
-                            _image,
-                            filterQuality: FilterQuality.none,
-                            fit: BoxFit.cover,
-                          ),
+                        : _image == null
+                            ? Image.network(
+                                _imgUrl,
+                                filterQuality: FilterQuality.none,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.file(
+                                _image,
+                                filterQuality: FilterQuality.none,
+                                fit: BoxFit.cover,
+                              ),
                   ),
                   Positioned(
                     bottom: 5,
@@ -119,7 +139,8 @@ class _ActualizarProductoDialogState extends State<ActualizarProductoDialog> {
               height: 150,
               width: 150,
             ),
-            TextFormField(controller: textNombreControl,
+            TextFormField(
+              controller: textNombreControl,
               decoration: InputDecoration(
                   labelText: "Nombre Producto",
                   prefixIcon: Icon(Icons.note_add)),
@@ -147,23 +168,13 @@ class _ActualizarProductoDialogState extends State<ActualizarProductoDialog> {
               ),
               onSaved: (entrada) => _codBarra = int.parse(entrada),
             ),
-            TextFormField(controller: textPrecio,
+            TextFormField(
+              controller: textPrecio,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                   labelText: "Precio", prefixIcon: Icon(Icons.monetization_on)),
               onSaved: (entrada) => _precioVenta = double.parse(entrada),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RaisedButton(
-                color: Colors.blueAccent,
-                textColor: Colors.white,
-                onPressed: () {
-                  agregarDatos(context);
-                },
-                child: Text("Agregar"),
-              ),
-            )
           ],
         ),
       ),
@@ -172,13 +183,19 @@ class _ActualizarProductoDialogState extends State<ActualizarProductoDialog> {
 
   Future<String> agregarDatos(context) async {
     formKey.currentState.save();
+
     //hace una referencia en la base de datos
     StorageUploadTask ref =
         FirebaseStorage.instance.ref().child(filename).putFile(_image);
     //espera una respuestas del server
-    productoActualizados=Productos(imgUrl: "onValue",
+    setState(() {
+      datos = true;
+    });
+    (await ref.onComplete).ref.getDownloadURL().then((onValue) {
+      productoActualizados = Productos(
+          imgUrl: onValue,
           cantidad: 1.0,
-          keyProducto: "",
+          keyProducto: widget.modelo.keyProducto,
           unidad: "",
           codBarra: _codBarra,
           tipo: "",
@@ -186,25 +203,7 @@ class _ActualizarProductoDialogState extends State<ActualizarProductoDialog> {
           peso: 1.0,
           precio: 1.0,
           precioDeVenta: _precioVenta);
-    setState(() {
-      datos = true;
-    });
-    (await ref.onComplete).ref.getDownloadURL().then((onValue) {
-      agregarProductosBloc.agregraP(Productos(
-          imgUrl: onValue,
-          cantidad: 1.0,
-          keyProducto: "",
-          unidad: "",
-          codBarra: _codBarra,
-          tipo: "",
-          nombre: _nombre,
-          peso: 1.0,
-          precio: 1.0,
-          precioDeVenta: _precioVenta));
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => AgregarProducto()),
-      );
+      Navigator.of(context).pop(productoActualizados);
     }).catchError((kj) {
       print("error");
     });
@@ -231,10 +230,37 @@ class _ActualizarProductoDialogState extends State<ActualizarProductoDialog> {
   }
 
   Future getGaleria() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery)
+        .then((onValue) {
+      setState(() {
+        _image = onValue;
+        filename = basename(_image.path);
+      });
+    });
+  }
+
+  agregaDatosSinImg(BuildContext context) {
+    formKey.currentState.save();
+    productoActualizados = Productos(
+        imgUrl: widget.modelo.imgUrl,
+        cantidad: 1.0,
+        keyProducto: widget.modelo.keyProducto,
+        unidad: "",
+        codBarra: _codBarra,
+        tipo: "",
+        nombre: _nombre,
+        peso: 1.0,
+        precio: 1.0,
+        precioDeVenta: _precioVenta);
 
     setState(() {
-      _image = image;
+      datos = true;
     });
+    Navigator.of(context).pop(productoActualizados);
+  }
+
+  void borrar(context) {
+    agregarProductosBloc.borrarP(widget.modelo);
+    Navigator.of(context).pop(null);
   }
 }

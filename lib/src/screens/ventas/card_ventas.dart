@@ -8,7 +8,7 @@ class CardVenta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {abrirVenta(context);},
+      onTap: () {abrirVenta(context,modelo);},
       child: Card(
         elevation: 5,
         child: ListTile(
@@ -50,10 +50,11 @@ class CardVenta extends StatelessWidget {
     );
   }
 
-  void abrirVenta(context) {
+  void abrirVenta(context, modelo) {  
+
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ListaVentas()),
+      MaterialPageRoute(builder: (context) => ListaVentas(modelo: modelo)),
     );
   }
 }

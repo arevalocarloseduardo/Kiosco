@@ -181,7 +181,7 @@ class _AgregarProductoState extends State<AgregarProducto> {
     StorageUploadTask ref =
         FirebaseStorage.instance.ref().child(filename).putFile(_image);
     //espera una respuestas del server
-
+    
     setState(() {
       datos = true;
     });

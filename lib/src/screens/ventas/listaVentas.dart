@@ -1,22 +1,32 @@
 import 'package:contabilidad/src/blocs/list_productos_bloc.dart';
+import 'package:contabilidad/src/blocs/verVentasPorId.dart';
 import 'package:contabilidad/src/modelos/productos_modelo.dart';
+import 'package:contabilidad/src/modelos/ventas_modelo.dart';
 import 'package:contabilidad/src/screens/productos/card_producto.dart';
 import 'package:flutter/material.dart';
 class ListaVentas extends StatefulWidget {
+  final Venta modelo;
+  ListaVentas({this.modelo});
+
   @override
   _ListaVentasState createState() => _ListaVentasState();
 }
 
 class _ListaVentasState extends State<ListaVentas> {
   @override
+  void initState() {
+    super.initState();
+    verVentasPorId.cargarDatos(widget.modelo);
+
+
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.blueAccent,
-        appBar: AppBar(
-         
+        appBar: AppBar(         
           title: Text("Productos Vendidos"),
-          centerTitle: true,
-          
+          centerTitle: true,          
         ),
         body: listaVentas());
   }
@@ -24,7 +34,7 @@ class _ListaVentasState extends State<ListaVentas> {
   Widget listaVentas() {
     return Container(     
       child: StreamBuilder<List<Productos>>(
-        stream: productosBloc.productosList,
+        stream:verVentasPorId.productosList,
         builder: (context, snapshot) {
           return !snapshot.hasData
               ? CircularProgressIndicator()

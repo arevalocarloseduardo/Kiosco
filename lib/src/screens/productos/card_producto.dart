@@ -44,7 +44,8 @@ class CardProducto extends StatelessWidget {
 
   void getEditProducto(BuildContext context) async {
     Productos prod = await showDialog(
-        builder: (_) => ActualizarProductoDialog(), context: context);
-    agregarProductosBloc.actualizaP(prod);
-  }
+        builder: (_) => ActualizarProductoDialog(modelo: modeloP,), context: context);
+    if(prod!=null){
+      agregarProductosBloc.actualizaP(prod);
+  }}
 }
