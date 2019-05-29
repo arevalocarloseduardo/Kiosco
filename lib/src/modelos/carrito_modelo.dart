@@ -15,4 +15,11 @@ class CarritoModelo {
         cantidad: data['cantidad'] ?? 1.1,        
         idProducto: data['idProducto'] ?? '');
   }
+  Map<String, dynamic> toJson() {
+    return {      
+      'idCarrito': idCarrito,      
+      'cantidad': cantidad,
+      'idProducto': idProducto,
+    };
+  }
 }

@@ -94,14 +94,7 @@ String _precioP="f";
       ),
       actions: <Widget>[
         FlatButton(
-          onPressed: () {
-            Navigator.of(context).pop(null);
-          },
-          textColor: Colors.redAccent,
-          child: Text("Cancelar"),
-        ),
-        FlatButton(
-          onPressed: _saveTodo,
+          onPressed: saveTodo,
           textColor: Colors.blue,
           child: Text("Agregar"),
         ),
@@ -109,9 +102,8 @@ String _precioP="f";
     );
 }
 
-  _saveTodo() {
+  void saveTodo() {
     final formsState = formKey.currentState;
-    if (!formsState.validate()) return;
     formsState.save();
     Navigator.of(context).pop(CarritoModelo(
       idProducto: codigoDeBarra,

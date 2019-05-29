@@ -29,6 +29,16 @@ class VentasBloc{
       });
     });
   }
+  
+  void agregarVenta(Venta p)async{
+    var s= Firestore.instance.collection('ventas').document();        
+      await s.setData(p.toJson());    
+    
+    List<Venta> _pls = ventasCollection.value;
+    _pls.add(p);
+    ventasCollection.sink.add(_pls);
+        
+  }
   void _doAddNew(Venta p) {
     if (ventasCollection.value == null) {
       if (ventasCollection.isClosed) return;

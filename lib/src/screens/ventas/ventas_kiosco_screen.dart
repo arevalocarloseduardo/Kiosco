@@ -30,9 +30,10 @@ class VentasScreen extends StatelessWidget {
   }
 
   irAgregarVentas(context) {
+    var uid=DateTime.now().toString();
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AgregarVenta()),
+      MaterialPageRoute(builder: (context) => AgregarVenta(uid:uid)),
     );
   }
 

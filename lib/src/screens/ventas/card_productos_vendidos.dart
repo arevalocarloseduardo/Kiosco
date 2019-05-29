@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:contabilidad/old/Models/Productos.dart';
 import 'package:contabilidad/src/modelos/carrito_modelo.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +17,7 @@ final db = Firestore.instance;
 String nombreP="f";
 String imgP="f";
 String precioP="f";
-  StreamSubscription sub;
+StreamSubscription sub;
 
   Map data;
 @override

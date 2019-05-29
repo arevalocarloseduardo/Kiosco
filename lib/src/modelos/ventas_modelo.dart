@@ -19,4 +19,13 @@ class Venta {
         idVenta: data['idVenta'] ?? '',
         fecha: data['fecha'] ?? '');
   }
+   Map<String, dynamic> toJson() {
+    return {      
+      'idCarrito': idCarrito,      
+      'totalVendido': totalVendido,      
+      'fecha': fecha,      
+      'hora': hora,
+      'idVenta': idVenta,
+    };
+  }
 }

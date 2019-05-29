@@ -1,27 +1,23 @@
+import 'package:contabilidad/src/blocs/ventas_bloc.dart';
+import 'package:contabilidad/src/modelos/carrito_modelo.dart';
 import 'package:contabilidad/src/modelos/productos_modelo.dart';
 import 'package:contabilidad/src/blocs/carrito_bloc.dart';
+import 'package:contabilidad/src/modelos/ventas_modelo.dart';
 import 'package:contabilidad/src/screens/ventas/card_carrito_venta.dart';
 import 'package:flutter/material.dart';
 
 import 'LectorCodigo.dart';
 
 class AgregarVenta extends StatefulWidget {
+  final String uid;
+  AgregarVenta({this.uid});
+
   @override
   _AgregarVentaState createState() => _AgregarVentaState();
 }
 
 class _AgregarVentaState extends State<AgregarVenta> {
-  var prod = Productos(
-      tipo: "klss",
-      peso: 5.5,
-      codBarra: 1,
-      keyProducto: "4",
-      nombre: "sds",
-      unidad: "sd",
-      cantidad: 5.5,
-      imgUrl: "KLK",
-      precio: 50.5,
-      precioDeVenta: 4.55);
+  var _totalV=0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +25,18 @@ class _AgregarVentaState extends State<AgregarVenta> {
       backgroundColor: Colors.blueAccent,
       appBar: AppBar(
         title: Text("Agregar Carrito"),
+        actions: <Widget>[
+          Center(
+              child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              child: Text("Finalizar"),
+              onTap: () {
+                finalizar();
+              },
+            ),
+          ))
+        ],
       ),
       body: listaCarrito(),
       floatingActionButton: FloatingActionButton(
@@ -66,7 +74,7 @@ class _AgregarVentaState extends State<AgregarVenta> {
       color: Colors.blueAccent,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: StreamBuilder<List<Productos>>(
+        child: StreamBuilder<List<CarritoModelo>>(
           stream: carritoBloc.carritoList,
           builder: (context, snapshot) {
             return !snapshot.hasData
@@ -84,10 +92,21 @@ class _AgregarVentaState extends State<AgregarVenta> {
   }
 
   void agregarCarrito(context) async {
-    Productos productoCarrito =
+    CarritoModelo productoCarrito =
         await showDialog(context: context, builder: (_) => LectorCodigo());
     if (productoCarrito != null) {
-      await carritoBloc.addCardToList(productoCarrito);
+      print("object");
+      await carritoBloc.addCardToList(productoCarrito, widget.uid);
     }
   }
+
+  void finalizar() {
+    ventasBloc.agregarVenta(Venta(
+        idCarrito: widget.uid,
+        totalVendido: _totalV,
+        idVenta: "",
+        hora: DateTime.now().hour.toString(),
+        fecha: DateTime.now().day.toString()));
+  }
+  
 }
