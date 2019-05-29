@@ -14,7 +14,7 @@ class AgregarProductosBloc{
   void agregraP(Productos p)async {   
    agregarProducto.sink.add(p);
 
-   var s= Firestore.instance.collection('Productos').document();
+   var s= Firestore.instance.collection('Productos').document(p.codBarra.toString());
         p.keyProducto=s.documentID;
       await s.setData(p.toJson());
         

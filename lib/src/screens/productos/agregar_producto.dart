@@ -32,12 +32,13 @@ class _AgregarProductoState extends State<AgregarProducto> {
       });
     });
   }
-
-  Future getGaleria() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _image = image;
+ Future getGaleria() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery)
+        .then((onValue) {
+      setState(() {
+        _image = onValue;
+        filename = basename(_image.path);
+      });
     });
   }
 
@@ -189,7 +190,7 @@ class _AgregarProductoState extends State<AgregarProducto> {
       agregarProductosBloc.agregraP(Productos(
           imgUrl: onValue,
           cantidad: 1.0,
-          keyProducto: "",
+          keyProducto: _codBarra.toString(),
           unidad: "",
           codBarra: _codBarra,
           tipo: "",

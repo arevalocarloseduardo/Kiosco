@@ -1,14 +1,20 @@
+import 'package:contabilidad/src/blocs/verVentasPorId.dart';
 import 'package:contabilidad/src/modelos/ventas_modelo.dart';
 import 'package:contabilidad/src/screens/ventas/listaVentas.dart';
 import 'package:flutter/material.dart';
 
 class CardVenta extends StatelessWidget {
+  
   final Venta modelo;
   CardVenta({this.modelo});
+  
   @override
   Widget build(BuildContext context) {
+    
     return InkWell(
-      onTap: () {abrirVenta(context,modelo);},
+      onTap: () {
+        abrirVenta(context);
+        },
       child: Card(
         elevation: 5,
         child: ListTile(
@@ -50,11 +56,11 @@ class CardVenta extends StatelessWidget {
     );
   }
 
-  void abrirVenta(context, modelo) {  
-
+  void abrirVenta(context) { 
+    verVentasPorId.crearLista(modelo.idCarrito);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ListaVentas(modelo: modelo)),
+      MaterialPageRoute(builder: (context) => ListaVentas(modelo.idCarrito)),
     );
   }
 }

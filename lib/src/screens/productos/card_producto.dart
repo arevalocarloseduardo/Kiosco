@@ -14,20 +14,20 @@ class CardProducto extends StatelessWidget {
       },
       child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(5),
           ),
           elevation: 5,
           child: Padding(
-            padding: const EdgeInsets.only(top: 5.0, bottom: 5),
+            padding: const EdgeInsets.all(5),
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 18.0),
+                  padding: const EdgeInsets.only(top: 18),
                   child: Image.network(
                     modeloP.imgUrl,
                     filterQuality: FilterQuality.none,
-                    fit: BoxFit.contain,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 Text(
@@ -35,6 +35,25 @@ class CardProducto extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.blue),
+                ),
+                Positioned(
+                  bottom: 0.1,
+                  right: 0.1,
+                  child: Container(color: Colors.black45,
+                    child: Row(
+                      children: <Widget>[
+                        Icon(Icons.attach_money,size: 15,color: Colors.white,),
+                        Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: Text(
+                          '${modeloP.precioDeVenta.toStringAsFixed(2)}',textAlign: TextAlign.end,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -44,8 +63,12 @@ class CardProducto extends StatelessWidget {
 
   void getEditProducto(BuildContext context) async {
     Productos prod = await showDialog(
-        builder: (_) => ActualizarProductoDialog(modelo: modeloP,), context: context);
-    if(prod!=null){
+        builder: (_) => ActualizarProductoDialog(
+              modelo: modeloP,
+            ),
+        context: context);
+    if (prod != null) {
       agregarProductosBloc.actualizaP(prod);
-  }}
+    }
+  }
 }

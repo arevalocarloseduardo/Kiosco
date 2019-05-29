@@ -4,11 +4,17 @@ import 'package:rxdart/rxdart.dart';
 
 class ProductosBloc{
   BehaviorSubject<List<Productos>>_productosCollection=BehaviorSubject<List<Productos>>();
+  
+  BehaviorSubject<Productos>_productos=BehaviorSubject<Productos>();
   //recuperar datos
   
+  BehaviorSubject <Productos> get productos=>_productos;
   BehaviorSubject <List<Productos>> get productosList=>_productosCollection;
 
    void iniciarDatos()async{
+
+     productos.listen((onData)=>print(""));
+     
      var q = await Firestore.instance.collection('Productos');
 
     q.snapshots().listen((querySnapshot) {
@@ -83,6 +89,7 @@ class ProductosBloc{
   }
   void dispose(){
     _productosCollection.close();
+    _productos.close();
   }
 }
 //instancia global

@@ -14,11 +14,14 @@ class ProductosScreen extends StatelessWidget {
         appBar: AppBar(
           leading: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: InkWell(onTap: () {}, child: Icon(Icons.search)),
+            
           ),
           title: Text("Mis Productos"),
           centerTitle: true,
           actions: <Widget>[
+           new IconButton(icon: Icon(Icons.search),onPressed: (){
+              ;
+          }),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(

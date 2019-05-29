@@ -15,7 +15,7 @@ class VentasScreen extends StatelessWidget {
           title: Text("Mis Ventas"),
           centerTitle: true,
           actions: <Widget>[
-             Padding(
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 child: Icon(Icons.add, size: 30),

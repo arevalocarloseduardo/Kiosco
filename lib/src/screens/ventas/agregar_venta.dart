@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 
 import 'LectorCodigo.dart';
 
-class AgregarVenta extends StatelessWidget {
+class AgregarVenta extends StatefulWidget {
+  @override
+  _AgregarVentaState createState() => _AgregarVentaState();
+}
+
+class _AgregarVentaState extends State<AgregarVenta> {
   var prod = Productos(
       tipo: "klss",
       peso: 5.5,
@@ -23,7 +28,7 @@ class AgregarVenta extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       appBar: AppBar(
-        title: Text("Agregar Al Carrito"),
+        title: Text("Agregar Carrito"),
       ),
       body: listaCarrito(),
       floatingActionButton: FloatingActionButton(
